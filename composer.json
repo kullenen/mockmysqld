@@ -1,0 +1,28 @@
+{
+    "name": "kullenen/mockmysqld",
+    "description": "To test your mysql based application just install mysqld",
+    "require": {
+        "symfony/process": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "mikey179/vfsstream": "^1.6",
+        "mcustiel/phiremock": "^1.11"
+    },
+    "authors": [
+        {
+            "name": "Alexandr Kullenen",
+            "email": "kullenen@1mps.ru"
+        }
+    ],
+	"autoload": {
+		"psr-4": {
+			"" : "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Test\\" : "tests/"
+		}
+	}
+}
