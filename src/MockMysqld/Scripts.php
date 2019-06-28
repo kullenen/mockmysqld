@@ -5,8 +5,8 @@ namespace MockMysqld;
 class Scripts extends \IteratorIterator {
 	private $filter;
 
-	public function __construct(array $fileNames, callable $filter = null) {
-		parent::__construct(new \ArrayIterator($fileNames));
+	public function __construct($fileNames, callable $filter = null) {
+		parent::__construct(Utils::ensureTraversable($fileNames));
 		$this->filter = $filter;
 	}
 
