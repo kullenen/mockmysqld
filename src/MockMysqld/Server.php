@@ -7,12 +7,21 @@ class Server {
 	private $processFactory;
 	private $initScripts;
 	private $process;
+	private $initTimeout = 60;
 
-	public function __construct(Options $options, $initScripts, callable $processFactory = null) {
+	public function __construct(Options $options, $initScripts = [], callable $processFactory = null) {
 		$this->options = $options;
 		$this->initScripts = Utils::ensureTraversable($initScripts);
 		$this->processFactory = $processFactory ?: new ProcessFactory;
 		$this->process = $this->createProcessObject($this->options);
+	}
+
+	function setInitTimeout($initTimeout) {
+		$this->initTimeout = $initTimeout;
+	}
+
+	public function getInitTimeout() {
+		return $this->initTimeout;
 	}
 
 	public function initDataDir() {
@@ -96,6 +105,7 @@ class Server {
 		$options['initialize-insecure'] = null;
 		$options['init-file'] = $initFile;
 		$process = $this->createProcessObject($options);
+		$process->setTimeout($this->initTimeout);
 		$process->mustRun();
 	}
 
