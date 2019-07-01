@@ -175,6 +175,13 @@ class ServerTest extends TestCase {
 		$server->waitForConnection(10);
 	}
 
+	public function testSetInitTimeout() {
+		$server = (new Server($this->options, null, $this->getProcessFactory(null)));
+		$expected = $server->getInitTimeout() + 1;
+		$server->setInitTimeout($expected);
+		$this->assertEquals($expected, $server->getInitTimeout());
+	}
+
 	private function getProcessFactory($process) {
 		return function (Options $o) use ($process) {
 			return $process;
