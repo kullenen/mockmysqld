@@ -4,9 +4,9 @@
 Mock server is using mysqld executable, so you need to install mysql server package.
 
 ## Composer
-	```
+
 	php composer.phar require kullenen/mockmysqld
-	```
+
 
 ## Usage
 
