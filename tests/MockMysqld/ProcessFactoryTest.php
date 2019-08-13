@@ -19,18 +19,17 @@ class ProcessFactoryTest extends TestCase {
 		$process = call_user_func($factory, $options);
 		$this->assertInstanceOf(Process::class, $process);
 
-		$this->assertContains('test-mysqld-executable', $process->getCommandLine());
+		$this->assertStringContainsString('test-mysqld-executable', $process->getCommandLine());
 
 		foreach ($options as $name => $value) {
-			$this->assertContains('--' . $name, $process->getCommandLine());
-			$value && $this->assertContains($value, $process->getCommandLine());
+			$this->assertStringContainsString('--' . $name, $process->getCommandLine());
+			$value && $this->assertStringContainsString($value, $process->getCommandLine());
 		}
 	}
 
-	/**
-	 * @expectedException \Exception
-	 */
 	public function testInvokeError() {
+		$this->expectException(\Exception::class);
+
 		$options = new Options;
 		$finder = $this->createMock(ExecutableFinder::class);
 		$finder->method('find')->willReturn(null);

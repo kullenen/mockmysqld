@@ -10,7 +10,7 @@ use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 class UtilsTest extends TestCase {
 	private $root;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->root = vfsStream::setup('mockmysqld');
 	}
 
@@ -34,10 +34,8 @@ class UtilsTest extends TestCase {
 		$this->assertEquals($expected, iterator_to_array($result));
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testEnsureTraversableError() {
+		$this->expectException(\InvalidArgumentException::class);
 		Utils::ensureTraversable(new \stdClass);
 	}
 
@@ -161,10 +159,9 @@ class UtilsTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \ErrorException
-	 */
 	public function testRemoveDirError() {
+		$this->expectException(\ErrorException::class);
+
 		$structure =  [
 			'dir' => [
 				'dir1' => [

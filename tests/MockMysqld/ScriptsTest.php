@@ -11,7 +11,7 @@ class ScriptsTest extends TestCase {
 	private $root;
 	private $files;
 
-	public function setUp() {
+	public function setUp(): void {
 		$structure = ['f1' => 'contents1', 'f2' => 'contents2'];
 		$this->root = vfsStream::setup('mockmysqld', null, $structure);
 

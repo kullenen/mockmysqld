@@ -26,7 +26,7 @@ CREATE TABLE `accounts` (
 EOS;
 
 		$filter =  new ChangeToMemoryEngineFilter;
-		$this->assertNotContains('memory', strtolower($filter($script)));
+		$this->assertStringNotContainsStringIgnoringCase('memory', $filter($script));
 
 		$filter = new ChangeToMemoryEngineFilter(
 			function ($table, $column, $type) {
@@ -36,10 +36,10 @@ EOS;
 
 		$filtered = $filter($script);
 
-		$this->assertNotContains('text', strtolower($filtered));
-		$this->assertNotContains('blob', strtolower($filtered));
-		$this->assertNotContains('innodb', strtolower($filtered));
-		$this->assertContains('memory', strtolower($filtered));
+		$this->assertStringNotContainsStringIgnoringCase('text', $filtered);
+		$this->assertStringNotContainsStringIgnoringCase('blob', $filtered);
+		$this->assertStringNotContainsStringIgnoringCase('innodb', $filtered);
+		$this->assertStringContainsStringIgnoringCase('memory', $filtered);
 		$this->assertEquals(8, substr_count($filtered, 'varchar(1234)'));
 	}
 }

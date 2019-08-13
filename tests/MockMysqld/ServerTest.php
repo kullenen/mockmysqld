@@ -19,7 +19,7 @@ class ServerTest extends TestCase {
 		]
 	];
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->root = vfsStream::setup('mockmysqld');
 		vfsStream::create(['tmpdir' => [], 'datadir' => ['file' => '...']]);
 		$this->options = new Options(
@@ -79,8 +79,8 @@ class ServerTest extends TestCase {
 				$this->returnCallback(
 					function () use ($o) {
 						$mergedScripts = file_get_contents($o['init-file']);
-						$this->assertContains('script1', $mergedScripts);
-						$this->assertContains('script2', $mergedScripts);
+						$this->assertStringContainsString('script1', $mergedScripts);
+						$this->assertStringContainsString('script2', $mergedScripts);
 					}
 				)
 			);
@@ -96,11 +96,10 @@ class ServerTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 * @expectedExceptionMessage signaled
-	 */
 	public function testKillOldProcess() {
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage('signaled');
+
 		$php = (new PhpExecutableFinder)->find(false);
 		$this->assertNotFalse($php);
 
@@ -148,11 +147,10 @@ class ServerTest extends TestCase {
 		$server->start();
 	}
 
-	/**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage timeout
-	 */
 	public function testWaitForConnectionError() {
+		$this->expectException(\Exception::class);
+		$this->expectExceptionMessage('timeout');
+
 		$server = new Server($this->options, null, $this->getProcessFactory(null));
 		$server->waitForConnection(1);
 	}

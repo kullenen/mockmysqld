@@ -16,7 +16,7 @@ class Server {
 		$this->process = $this->createProcessObject($this->options);
 	}
 
-	function setInitTimeout($initTimeout) {
+	public function setInitTimeout($initTimeout) {
 		$this->initTimeout = $initTimeout;
 	}
 
